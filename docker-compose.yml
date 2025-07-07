@@ -1,0 +1,46 @@
+version: "3.8"
+
+services:
+    # PostgreSQL データベース
+    db:
+        image: postgres:15
+        container_name: finote-db
+        environment:
+            POSTGRES_DB: finote
+            POSTGRES_USER: finote_user
+            POSTGRES_PASSWORD: finote_password
+        ports:
+            - "5432:5432"
+        volumes:
+            - postgres_data:/var/lib/postgresql/data
+            - ./docker/postgres/init.sql:/docker-entrypoint-initdb.d/init.sql
+        restart: unless-stopped
+        healthcheck:
+            test: ["CMD-SHELL", "pg_isready -U finote_user -d finote"]
+            interval: 30s
+            timeout: 10s
+            retries: 5
+
+    # pgAdmin (データベース管理GUI) - オプション
+    pgadmin:
+        image: dpage/pgadmin4:latest
+        container_name: finote-pgadmin
+        environment:
+            PGADMIN_DEFAULT_EMAIL: admin@finote.com
+            PGADMIN_DEFAULT_PASSWORD: admin
+        ports:
+            - "5050:80"
+        depends_on:
+            - db
+        restart: unless-stopped
+
+    # Redis (キャッシュ用) - 後で必要になる可能性
+    redis:
+        image: redis:7-alpine
+        container_name: finote-redis
+        ports:
+            - "6379:6379"
+        restart: unless-stopped
+
+volumes:
+    postgres_data:
