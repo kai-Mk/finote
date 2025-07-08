@@ -1,12 +1,8 @@
 // This is your Prisma schema file,
 // learn more about it in the docs: https://pris.ly/d/prisma-schema
 
-// Looking for ways to speed up your queries, or scale easily with your serverless or edge functions?
-// Try Prisma Accelerate: https://pris.ly/cli/accelerate-init
-
 generator client {
   provider = "prisma-client-js"
-  output   = "../src/generated/prisma"
 }
 
 datasource db {
@@ -14,11 +10,182 @@ datasource db {
   url      = env("DATABASE_URL")
 }
 
-// 基本的なユーザーモデル（将来のために）
-model User {
-  id        String   @id @default(cuid())
-  email     String   @unique
-  name      String?
-  createdAt DateTime @default(now())
-  updatedAt DateTime @updatedAt
+// 親カテゴリー
+model MainCategory {
+  id        Int          @id @default(autoincrement())
+  name      String       @db.VarChar(100)
+  type      CategoryType
+  createdAt DateTime     @default(now()) @map("created_at")
+  updatedAt DateTime     @updatedAt @map("updated_at")
+  deletedAt DateTime?    @map("deleted_at")
+
+  // Relations
+  subCategories SubCategory[]
+  transactions  Transaction[]
+  fixedCosts    FixedCost[]
+
+  @@map("main_categories")
+}
+
+// 子カテゴリー
+model SubCategory {
+  id             Int       @id @default(autoincrement())
+  name           String    @db.VarChar(100)
+  mainCategoryId Int       @map("main_category_id")
+  createdAt      DateTime  @default(now()) @map("created_at")
+  updatedAt      DateTime  @updatedAt @map("updated_at")
+  deletedAt      DateTime? @map("deleted_at")
+
+  // Relations
+  mainCategory MainCategory  @relation(fields: [mainCategoryId], references: [id])
+  transactions Transaction[]
+  fixedCosts   FixedCost[]
+
+  @@map("sub_categories")
+}
+
+// 支払い方法
+model PaymentMethod {
+  id          Int               @id @default(autoincrement())
+  name        String            @db.VarChar(50)
+  type        PaymentMethodType
+  description String?           @db.Text
+  createdAt   DateTime          @default(now()) @map("created_at")
+  updatedAt   DateTime          @updatedAt @map("updated_at")
+  deletedAt   DateTime?         @map("deleted_at")
+
+  // Relations
+  transactions Transaction[]
+
+  @@map("payment_methods")
+}
+
+// 予算
+model Budget {
+  id          Int       @id @default(autoincrement())
+  name        String    @db.VarChar(100)
+  totalAmount Int       @map("total_amount")
+  startDate   DateTime  @map("start_date") @db.Date
+  endDate     DateTime  @map("end_date") @db.Date
+  description String?   @db.Text
+  createdAt   DateTime  @default(now()) @map("created_at")
+  updatedAt   DateTime  @updatedAt @map("updated_at")
+  deletedAt   DateTime? @map("deleted_at")
+
+  // Relations
+  transactions Transaction[]
+
+  @@map("budgets")
+}
+
+// 取引
+model Transaction {
+  id              Int             @id @default(autoincrement())
+  amount          Int
+  type            TransactionType
+  mainCategoryId  Int             @map("main_category_id")
+  subCategoryId   Int?            @map("sub_category_id")
+  description     String?         @db.Text
+  date            DateTime        @db.Date
+  budgetId        Int?            @map("budget_id")
+  paymentMethodId Int             @map("payment_method_id")
+  createdAt       DateTime        @default(now()) @map("created_at")
+  updatedAt       DateTime        @updatedAt @map("updated_at")
+  deletedAt       DateTime?       @map("deleted_at")
+
+  // Relations
+  mainCategory  MainCategory  @relation(fields: [mainCategoryId], references: [id])
+  subCategory   SubCategory?  @relation(fields: [subCategoryId], references: [id])
+  budget        Budget?       @relation(fields: [budgetId], references: [id])
+  paymentMethod PaymentMethod @relation(fields: [paymentMethodId], references: [id])
+
+  @@map("transactions")
+}
+
+// 固定費
+model FixedCost {
+  id             Int       @id @default(autoincrement())
+  name           String    @db.VarChar(100)
+  amount         Int
+  mainCategoryId Int       @map("main_category_id")
+  subCategoryId  Int?      @map("sub_category_id")
+  billingDate    Int       @map("billing_date") // 1-31
+  isActive       Boolean   @default(true) @map("is_active")
+  endDate        DateTime? @map("end_date") @db.Date
+  createdAt      DateTime  @default(now()) @map("created_at")
+  updatedAt      DateTime  @updatedAt @map("updated_at")
+  deletedAt      DateTime? @map("deleted_at")
+
+  // Relations
+  mainCategory MainCategory @relation(fields: [mainCategoryId], references: [id])
+  subCategory  SubCategory? @relation(fields: [subCategoryId], references: [id])
+
+  @@map("fixed_costs")
+}
+
+// 投資カテゴリー
+model InvestmentCategory {
+  id          Int       @id @default(autoincrement())
+  name        String    @db.VarChar(50)
+  description String?   @db.Text
+  createdAt   DateTime  @default(now()) @map("created_at")
+  updatedAt   DateTime  @updatedAt @map("updated_at")
+  deletedAt   DateTime? @map("deleted_at")
+
+  // Relations
+  investments Investment[]
+
+  @@map("investment_categories")
+}
+
+// 投資
+model Investment {
+  id                   Int       @id @default(autoincrement())
+  investmentName       String    @map("investment_name") @db.VarChar(100)
+  investmentCategoryId Int       @map("investment_category_id")
+  monthlyContribution  Int       @map("monthly_contribution")
+  currentValue         Int       @map("current_value")
+  date                 DateTime  @db.Date
+  profitLoss           Int       @map("profit_loss")
+  createdAt            DateTime  @default(now()) @map("created_at")
+  updatedAt            DateTime  @updatedAt @map("updated_at")
+  deletedAt            DateTime? @map("deleted_at")
+
+  // Relations
+  investmentCategory InvestmentCategory @relation(fields: [investmentCategoryId], references: [id])
+
+  @@map("investments")
+}
+
+// ポイント
+model Point {
+  id              Int       @id @default(autoincrement())
+  name            String    @db.VarChar(50)
+  currentPoints   Int       @map("current_points")
+  expiringPoints  Int       @default(0) @map("expiring_points")
+  expirationDate  DateTime? @map("expiration_date") @db.Date
+  lastCheckedDate DateTime  @map("last_checked_date") @db.Date
+  createdAt       DateTime  @default(now()) @map("created_at")
+  updatedAt       DateTime  @updatedAt @map("updated_at")
+  deletedAt       DateTime? @map("deleted_at")
+
+  @@map("points")
+}
+
+// Enums
+enum CategoryType {
+  income // 収入
+  expense // 支出
+}
+
+enum TransactionType {
+  income // 収入
+  expense // 支出
+}
+
+enum PaymentMethodType {
+  cash // 現金
+  credit // クレジットカード
+  e_money // 電子マネー
+  bank_transfer // 銀行振込・口座引き落とし
 }
