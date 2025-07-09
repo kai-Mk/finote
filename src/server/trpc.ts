@@ -4,11 +4,25 @@ import { ZodError } from 'zod';
 import { prisma } from '@/lib/prisma';
 
 /**
- * tRPCの初期化
- * - SuperJSON: Date、BigInt等の型を正確にシリアライズ
- * - ErrorFormatter: Zodバリデーションエラーの整形
+ * Context作成関数
+ * fetch adapter用の型に対応
  */
-const t = initTRPC.create({
+export const createTRPCContext = async (opts: { req: Request }) => {
+  return {
+    prisma,
+    headers: opts.req.headers,
+  };
+};
+
+/**
+ * Context型の定義
+ */
+export type Context = Awaited<ReturnType<typeof createTRPCContext>>;
+
+/**
+ * tRPCの初期化（Context型付き）
+ */
+const t = initTRPC.context<Context>().create({
   transformer: superjson,
   errorFormatter({ shape, error }) {
     return {
@@ -29,26 +43,6 @@ export const router = t.router;
 
 /**
  * Public Procedure（認証不要）
- * 現在は全てのAPIが認証不要で使用可能
- * 将来的に認証機能を追加する場合は、protectedProcedureを作成
+ * ctx.prismaが正しく型付けされる
  */
 export const publicProcedure = t.procedure;
-
-/**
- * Context作成関数
- * 各APIリクエストで共有される情報を定義
- * - prisma: データベースクライアント
- * - 将来的にuser情報等を追加予定
- */
-export const createTRPCContext = async (opts: { headers: Headers }) => {
-  return {
-    prisma,
-    headers: opts.headers,
-  };
-};
-
-/**
- * Context型の定義
- * tRPCルーター内で使用される型
- */
-export type Context = Awaited<ReturnType<typeof createTRPCContext>>;
