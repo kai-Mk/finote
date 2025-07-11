@@ -1,0 +1,25 @@
+@use '@/styles' as *;
+
+.header {
+  width: 100%;
+  height: $header-height;
+  background: linear-gradient(
+    to right,
+    var(--header-color-first, #5de0e6),
+    var(--header-color-second, #004aad)
+  );
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 0 32px;
+
+  .logo {
+    font-size: $font-size-xl;
+    font-weight: $font-weight-bold;
+    color: $white-text-color;
+  }
+
+  .user_info {
+    // 後ほど作成予定
+  }
+}

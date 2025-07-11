@@ -1,0 +1,6 @@
+@use '@/styles' as *;
+
+.sidebar {
+  width: 300px;
+  background-color: $sidebar-color;
+}

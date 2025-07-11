@@ -1,4 +1,4 @@
-@use '../styles' as *;
+@use '@/styles' as *;
 
 * {
   box-sizing: border-box;
@@ -20,6 +20,7 @@ body {
 }
 
 a {
+  color: $main-text-color;
   text-decoration: none;
   cursor: pointer;
 }
