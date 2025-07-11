@@ -1,0 +1,62 @@
+@mixin mobile {
+  @media (max-width: #{$breakpoint-sm - 1px}) {
+    @content;
+  }
+}
+
+@mixin tablet {
+  @media (min-width: #{$breakpoint-sm}) and (max-width: #{$breakpoint-md - 1px}) {
+    @content;
+  }
+}
+
+@mixin desktop {
+  @media (min-width: #{$breakpoint-md}) {
+    @content;
+  }
+}
+
+/* Scrollbar Mixins */
+@mixin scrollbar {
+  // Webkit系ブラウザ（Chrome, Safari, Edge）
+  &::-webkit-scrollbar {
+    width: 6px;
+    height: 6px;
+  }
+
+  &::-webkit-scrollbar-track {
+    background: #f1f5f9;
+    border-radius: 4px;
+  }
+
+  &::-webkit-scrollbar-thumb {
+    background: #cbd5e1;
+    border-radius: 4px;
+    transition: background-color $transition-fast;
+
+    &:hover {
+      background: #94a3b8;
+    }
+  }
+
+  &::-webkit-scrollbar-corner {
+    background: #f1f5f9;
+  }
+
+  // Firefox
+  scrollbar-width: thin;
+  scrollbar-color: #cbd5e1 #f1f5f9;
+}
+
+@mixin scrollbar-hidden {
+  // Webkit系ブラウザ
+  &::-webkit-scrollbar {
+    display: none;
+  }
+
+  // Firefox
+  scrollbar-width: none;
+
+  // IE
+  -ms-overflow-style: none;
+}

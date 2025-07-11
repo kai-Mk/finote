@@ -1,0 +1,57 @@
+/* Colors */
+$main-color: #333;
+$accent-color: #19ad7f;
+$sub-color: #64748b;
+
+// 背景
+$header-color-first: #5de0e6;
+$header-color-second: #004aad;
+$background-color: #f8fafc;
+$sidebar-color: #f1f5f9;
+
+// テキストカラー
+$main-text-color: #333;
+$sub-text-color: #64748b;
+$white-text-color: #fff;
+
+// 収支
+$income-color: #1d4ed8;
+$expense-color: #dc2626;
+$budget-color: #19ad7f;
+
+// 警告・成功
+$warning-color: #f59e0b;
+$success-color: #059669;
+
+// エラー
+$error-color: #dc2626;
+
+// ボーダー
+$border-color: #f1f5f9;
+
+/* fonts */
+// フォントサイズ
+$font-size-xs: 10px;
+$font-size-sm: 16px;
+$font-size-md: 24px;
+$font-size-lg: 32px;
+$font-size-xl: 48px;
+
+// フォントウェイト
+$font-weight-light: 300;
+$font-weight-normal: 400;
+$font-weight-medium: 500;
+$font-weight-semibold: 600;
+$font-weight-bold: 700;
+
+// レタースペーシング
+$letter-spacing-xs: 0.5px;
+
+/* Breakpoints */
+$breakpoint-sm: 640px;
+$breakpoint-md: 768px;
+$breakpoint-lg: 1024px;
+
+/* Transitions */
+$transition-fast: 150ms ease;
+$transition-normal: 300ms ease;
