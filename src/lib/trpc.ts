@@ -1,7 +1,7 @@
 import { createTRPCReact } from '@trpc/react-query';
 import { createTRPCProxyClient, httpBatchLink } from '@trpc/client';
 import superjson from 'superjson';
-import type { AppRouter } from '@/server/routers';
+import { AppRouter } from '@/server/routers';
 
 /**
  * React用のtRPCクライアント

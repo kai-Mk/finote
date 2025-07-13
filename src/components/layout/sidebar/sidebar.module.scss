@@ -1,6 +1,126 @@
 @use '@/styles' as *;
 
 .sidebar {
-  width: 300px;
+  position: fixed;
+  top: $header-height;
+  left: 0;
+  width: 260px;
+  height: calc(100vh - #{$header-height});
   background-color: $sidebar-color;
+  transition: width $transition-normal;
+  padding: 16px 8px;
+  overflow-y: auto;
+  z-index: 1000;
+
+  &.open {
+    width: $open-sidebar-width;
+  }
+
+  &.closed {
+    width: $closed-sidebar-width;
+
+    .toggle_sidebar {
+      justify-content: center;
+    }
+  }
+
+  .toggle_sidebar {
+    display: flex;
+    justify-content: flex-end;
+    margin-bottom: 16px;
+    padding: 8px 0;
+
+    .toggle_button {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      width: 40px;
+      height: 40px;
+      background: rgba($accent-color, 0.1);
+      border: none;
+      border-radius: 8px;
+      color: $accent-color;
+      cursor: pointer;
+      transition: all $transition-normal;
+
+      &:hover {
+        background: rgba($accent-color, 0.2);
+        transform: scale(1.05);
+      }
+
+      &:active {
+        transform: scale(0.95);
+      }
+    }
+
+    .toggle_icon {
+      transition: transform $transition-normal;
+    }
+  }
+
+  .nav_list {
+    padding: 0;
+    margin: 0;
+    display: flex;
+    flex-direction: column;
+    gap: 4px;
+
+    .nav_item {
+      position: relative;
+
+      .nav_link {
+        display: flex;
+        align-items: center;
+        padding: 16px 12px;
+        border-radius: 16px;
+        transition: all $transition-normal;
+        position: relative;
+        min-height: 56px;
+
+        &:hover {
+          background-color: rgba($accent-color, 0.1);
+          color: $accent-color;
+          transform: translateX(2px);
+        }
+
+        &.active {
+          background-color: rgba($accent-color, 0.15);
+          color: $accent-color;
+
+          &::after {
+            content: '';
+            position: absolute;
+            right: 0;
+            top: 50%;
+            transform: translateY(-50%);
+            width: 4px;
+            height: 60%;
+            background-color: $accent-color;
+            border-radius: 2px 0 0 2px;
+          }
+        }
+
+        .nav_icon {
+          flex-shrink: 0;
+          transition: all $transition-normal;
+        }
+
+        .nav_text {
+          margin-left: 16px;
+          font-weight: $font-weight-medium;
+          white-space: nowrap;
+          overflow: hidden;
+          transition: all $transition-normal;
+          opacity: 1;
+          transform: translateX(0);
+
+          &.hidden {
+            opacity: 0;
+            transform: translateX(-10px);
+            pointer-events: none;
+          }
+        }
+      }
+    }
+  }
 }

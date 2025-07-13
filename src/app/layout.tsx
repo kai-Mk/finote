@@ -2,8 +2,7 @@ import type { Metadata } from 'next';
 import { Inter } from 'next/font/google';
 import './globals.scss';
 import { Providers } from './providers';
-import styles from './dashboard.module.scss';
-import { Header, Sidebar } from '@/components/layout';
+import DashboardLayout from './(dashboard)/DashboardLayout';
 
 const inter = Inter({
   subsets: ['latin'],
@@ -25,13 +24,7 @@ export default function RootLayout({
     <html lang="ja" className={inter.variable}>
       <body className={inter.className}>
         <Providers>
-          <div className={styles.app}>
-            <Header />
-            <main className={styles.main}>
-              <Sidebar />
-              <div className={styles.container}>{children}</div>
-            </main>
-          </div>
+          <DashboardLayout>{children}</DashboardLayout>
         </Providers>
       </body>
     </html>

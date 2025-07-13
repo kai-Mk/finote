@@ -7,7 +7,7 @@ import { transactionRouter } from './transaction';
  */
 export const appRouter = router({
   // 取引関連のAPIルーター
-  transitions: transactionRouter,
+  transactions: transactionRouter,
 });
 
 /**
