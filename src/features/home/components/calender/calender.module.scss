@@ -1,0 +1,164 @@
+@use '@/styles' as *;
+
+.calender_header {
+  display: flex;
+  justify-content: space-between;
+  height: 40px;
+
+  .date_select_wrapper {
+    display: flex;
+    align-items: center;
+    gap: 16px;
+
+    .calender_icon {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      width: 40px;
+      height: 40px;
+      background: rgba($sub-color, 0.1);
+      color: $sub-color;
+      border: none;
+      border-radius: 8px;
+      cursor: pointer;
+      transition: all $transition-normal;
+
+      // テキスト選択とドラッグを無効化
+      user-select: none;
+      -webkit-user-select: none;
+      -moz-user-select: none;
+      -ms-user-select: none;
+
+      // タッチデバイスでのハイライトを無効化
+      -webkit-tap-highlight-color: transparent;
+      -webkit-touch-callout: none;
+
+      &:hover {
+        @include button-hover($sub-color);
+      }
+
+      &:focus {
+        outline: 2px solid rgba($sub-color, 0.3);
+        outline-offset: 2px;
+      }
+
+      &:active {
+        transform: scale(0.95);
+      }
+    }
+
+    .calender_text_wrapper {
+      min-width: 140px;
+      display: flex;
+      justify-content: center;
+
+      // テキスト選択を無効化
+      user-select: none;
+      -webkit-user-select: none;
+      -moz-user-select: none;
+      -ms-user-select: none;
+
+      // ドラッグを無効化
+      -webkit-user-drag: none;
+      -khtml-user-drag: none;
+      -moz-user-drag: none;
+      -o-user-drag: none;
+    }
+
+    .calender_text {
+      font-size: $font-size-md;
+      font-weight: $font-weight-semibold;
+      color: $main-text-color;
+      display: flex;
+      align-items: baseline;
+      gap: 2px;
+
+      // テキスト選択を完全に無効化
+      user-select: none;
+      -webkit-user-select: none;
+      -moz-user-select: none;
+      -ms-user-select: none;
+
+      // コピー防止
+      -webkit-touch-callout: none;
+      -webkit-tap-highlight-color: transparent;
+    }
+
+    .year_text {
+      font-variant-numeric: tabular-nums; // 数字の幅を統一
+      min-width: 3em; // 4桁年に対応
+      text-align: right;
+    }
+
+    .month_text {
+      font-variant-numeric: tabular-nums; // 数字の幅を統一
+      min-width: 1.5em; // 2桁月に対応
+      text-align: right;
+    }
+
+    .small_text {
+      font-size: $font-size-sm;
+      color: $sub-text-color;
+      font-weight: $font-weight-normal;
+      margin: 0 2px;
+    }
+
+    .date_select_button {
+      font-size: $font-size-sm;
+      height: 100%;
+      padding: 0 16px;
+      background: rgba($income-color, 0.1);
+      color: $income-color;
+      border: none;
+      border-radius: 8px;
+      cursor: pointer;
+      transition: all $transition-normal;
+      white-space: nowrap;
+
+      // テキスト選択を無効化
+      user-select: none;
+      -webkit-user-select: none;
+      -moz-user-select: none;
+      -ms-user-select: none;
+      -webkit-tap-highlight-color: transparent;
+
+      &:hover {
+        @include button-hover($income-color);
+      }
+
+      &:focus {
+        outline: 2px solid rgba($income-color, 0.3);
+        outline-offset: 2px;
+      }
+    }
+  }
+
+  .budget_add_button {
+    font-size: $font-size-sm;
+    height: 100%;
+    padding: 0 24px;
+    background: rgba($budget-color, 0.1);
+    color: $budget-color;
+    border: none;
+    border-radius: 8px;
+    cursor: pointer;
+    transition: all $transition-normal;
+    white-space: nowrap;
+
+    // テキスト選択を無効化
+    user-select: none;
+    -webkit-user-select: none;
+    -moz-user-select: none;
+    -ms-user-select: none;
+    -webkit-tap-highlight-color: transparent;
+
+    &:hover {
+      @include button-hover($budget-color);
+    }
+
+    &:focus {
+      outline: 2px solid rgba($budget-color, 0.3);
+      outline-offset: 2px;
+    }
+  }
+}

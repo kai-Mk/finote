@@ -60,3 +60,11 @@
   // IE
   -ms-overflow-style: none;
 }
+
+// ボタンホバー
+@mixin button-hover($color) {
+  &:hover {
+    background-color: rgba($color, 0.2);
+    transform: scale(1.05);
+  }
+}

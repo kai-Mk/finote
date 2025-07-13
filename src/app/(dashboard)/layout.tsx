@@ -1,7 +1,7 @@
 'use client';
 
+import s from './dashboard.module.scss';
 import Header from '@/components/layout/header/Header';
-import styles from './dashboard.module.scss';
 import Sidebar from '@/components/layout/sidebar/Sidebar';
 import { useState } from 'react';
 
@@ -12,15 +12,15 @@ export default function DashboardLayout({
 }) {
   const [isOpenSidebar, setIsOpenSidebar] = useState(true);
   return (
-    <div className={styles.app}>
+    <div className={s.app}>
       <Header />
-      <main className={styles.main}>
+      <main className={s.main}>
         <Sidebar
           isOpenSidebar={isOpenSidebar}
           setIsOpenSidebar={setIsOpenSidebar}
         />
         <div
-          className={`${styles.container} ${isOpenSidebar ? styles.sidebar_open : styles.sidebar_closed}`}
+          className={`${s.container} ${isOpenSidebar ? s.sidebar_open : s.sidebar_closed}`}
         >
           {children}
         </div>

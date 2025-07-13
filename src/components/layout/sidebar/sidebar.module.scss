@@ -44,8 +44,7 @@
       transition: all $transition-normal;
 
       &:hover {
-        background: rgba($accent-color, 0.2);
-        transform: scale(1.05);
+        @include button-hover($accent-color);
       }
 
       &:active {
