@@ -103,32 +103,36 @@
       margin: 0 2px;
     }
 
-    .date_select_button {
-      font-size: $font-size-sm;
-      height: 100%;
-      padding: 0 16px;
-      background: rgba($income-color, 0.1);
-      color: $income-color;
-      border: none;
-      border-radius: 8px;
-      cursor: pointer;
-      transition: all $transition-normal;
-      white-space: nowrap;
+    .select_month_wrapper {
+      position: relative;
 
-      // テキスト選択を無効化
-      user-select: none;
-      -webkit-user-select: none;
-      -moz-user-select: none;
-      -ms-user-select: none;
-      -webkit-tap-highlight-color: transparent;
+      .date_select_button {
+        font-size: $font-size-sm;
+        height: 40px;
+        padding: 0 16px;
+        background: rgba($income-color, 0.1);
+        color: $income-color;
+        border: none;
+        border-radius: 8px;
+        cursor: pointer;
+        transition: all $transition-normal;
+        white-space: nowrap;
 
-      &:hover {
-        @include button-hover($income-color);
-      }
+        // テキスト選択を無効化
+        user-select: none;
+        -webkit-user-select: none;
+        -moz-user-select: none;
+        -ms-user-select: none;
+        -webkit-tap-highlight-color: transparent;
 
-      &:focus {
-        outline: 2px solid rgba($income-color, 0.3);
-        outline-offset: 2px;
+        &:hover {
+          @include button-hover($income-color);
+        }
+
+        &:focus {
+          outline: 2px solid rgba($income-color, 0.3);
+          outline-offset: 2px;
+        }
       }
     }
   }

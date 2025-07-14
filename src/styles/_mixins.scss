@@ -1,3 +1,5 @@
+@use './variables' as *;
+
 @mixin mobile {
   @media (max-width: #{$breakpoint-sm - 1px}) {
     @content;
@@ -67,4 +69,12 @@
     background-color: rgba($color, 0.2);
     transform: scale(1.05);
   }
+}
+
+// モーダルボックス
+@mixin modal-box {
+  background-color: $background-color;
+  box-shadow: $modal-box-shadow;
+  border-radius: 16px;
+  padding: 24px;
 }

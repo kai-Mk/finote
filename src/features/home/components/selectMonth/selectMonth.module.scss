@@ -1,0 +1,214 @@
+@use '@/styles' as *;
+
+@mixin button-action {
+  &:hover {
+    background: rgba($income-color, 0.1);
+    color: $income-color;
+    border-color: rgba($income-color, 0.3);
+  }
+
+  &.selected {
+    background: $income-color;
+    color: $white-text-color;
+    border-color: $income-color;
+  }
+
+  &.current {
+    color: $income-color;
+    border-color: rgba($income-color, 0.5);
+  }
+
+  &.current:hover {
+    background: rgba($income-color, 0.1);
+    border-color: rgba($income-color, 0.3);
+  }
+
+  &.current.selected {
+    background: $income-color;
+    color: $white-text-color;
+    border-color: $income-color;
+  }
+}
+
+.select_month_modal {
+  @include modal-box;
+  position: absolute;
+  top: calc(100% + 8px);
+  left: 0;
+  width: 320px;
+  z-index: 1000;
+
+  animation: dropdownFadeIn 0.3s ease-out;
+
+  // 閉じる時のアニメーション
+  &.closing {
+    animation: dropdownFadeOut 0.3s ease-in forwards;
+  }
+
+  .modal_label {
+    display: block;
+    font-size: $font-size-sm;
+    color: $main-text-color;
+    font-weight: $font-weight-semibold;
+    margin-bottom: 8px;
+  }
+
+  .year_selector {
+    margin-bottom: 16px;
+
+    .year_grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 6px;
+      max-height: 110px;
+      overflow-y: auto;
+      @include scrollbar;
+
+      .year_option {
+        padding: 4px 8px;
+        background: transparent;
+        border: 1px solid $border-color;
+        border-radius: 6px;
+        font-size: $font-size-sm;
+        color: $sub-text-color;
+        cursor: pointer;
+        transition: all $transition-fast;
+        user-select: none;
+
+        @include button-action;
+      }
+    }
+  }
+
+  .month_selector {
+    margin-bottom: 16px;
+
+    .month_grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 6px;
+      max-height: 110px;
+      overflow-y: auto;
+      @include scrollbar;
+
+      .month_option {
+        padding: 4px 8px;
+        background: transparent;
+        border: 1px solid $border-color;
+        border-radius: 6px;
+        font-size: $font-size-sm;
+        color: $sub-text-color;
+        cursor: pointer;
+        transition: all $transition-fast;
+        user-select: none;
+
+        @include button-action;
+      }
+    }
+  }
+
+  // ボタンエリア
+  .select_month_buttons {
+    display: flex;
+    gap: 12px;
+    padding-top: 8px;
+    border-top: 1px solid $border-color;
+  }
+
+  // キャンセルボタン
+  .cancel_button {
+    flex: 1;
+    padding: 6px 8px;
+    background: transparent;
+    color: $sub-text-color;
+    border: 1px solid $border-color;
+    border-radius: 8px;
+    font-size: $font-size-sm;
+    font-weight: $font-weight-medium;
+    cursor: pointer;
+    transition: all $transition-fast;
+    user-select: none;
+    -webkit-tap-highlight-color: transparent;
+
+    &:hover {
+      background: rgba($sub-color, 0.05);
+      color: $sub-color;
+      border-color: rgba($sub-color, 0.3);
+      transform: translateY(-1px);
+    }
+
+    &:focus {
+      outline: none;
+      border-color: $sub-color;
+      box-shadow: 0 0 0 3px rgba($sub-color, 0.1);
+    }
+
+    &:active {
+      transform: translateY(0);
+      background: rgba($sub-color, 0.1);
+    }
+  }
+
+  // 選択ボタン
+  .select_button {
+    flex: 1;
+    padding: 6px 8px;
+    background: $income-color;
+    color: $white-text-color;
+    border: 1px solid $income-color;
+    border-radius: 8px;
+    font-size: $font-size-sm;
+    font-weight: $font-weight-semibold;
+    cursor: pointer;
+    transition: all $transition-normal;
+    user-select: none;
+    -webkit-tap-highlight-color: transparent;
+
+    &:hover {
+      background: darken($income-color, 8%);
+      border-color: darken($income-color, 8%);
+      transform: translateY(-1px);
+      box-shadow: 0 4px 12px rgba($income-color, 0.3);
+    }
+
+    &:focus {
+      outline: none;
+      box-shadow: 0 0 0 3px rgba($income-color, 0.3);
+    }
+
+    &:active {
+      transform: translateY(0);
+      background: darken($income-color, 12%);
+      box-shadow: 0 2px 6px rgba($income-color, 0.2);
+    }
+
+    // 押した感のあるアニメーション
+    &:active {
+      transition: all 0.1s ease;
+    }
+  }
+}
+
+// ドロップダウンのフェードインアニメーション
+@keyframes dropdownFadeIn {
+  from {
+    opacity: 0;
+    transform: translateY(-8px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+// フェードアウトアニメーション
+@keyframes dropdownFadeOut {
+  from {
+    opacity: 1;
+    transform: translateY(0);
+  }
+  to {
+    opacity: 0;
+    transform: translateY(-8px);
+  }
+}

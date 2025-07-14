@@ -1,6 +1,8 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { ChevronLeft, ChevronRight } from 'lucide-react';
 import s from './calender.module.scss';
+import SelectMonthModal from '../selectMonth/SelectMonthModal';
+import { useOutsideClick } from '@/hooks/useOutsideClick';
 
 type CalenderProps = {
   selectedMonth: {
@@ -9,13 +11,34 @@ type CalenderProps = {
   };
   handlePreviousMonth: () => void;
   handleNextMonth: () => void;
+  handleSelectedMonth: (newMonth: { year: number; month: number }) => void;
 };
 
 const Calender = ({
   selectedMonth,
   handlePreviousMonth,
   handleNextMonth,
+  handleSelectedMonth,
 }: CalenderProps) => {
+  const [isSelectMonthOpen, setIsSelectMonthOpen] = useState(false);
+
+  // モーダルk開閉
+  const [isClosing, setIsClosing] = useState(false);
+  const handleOpenModal = () => {
+    setIsSelectMonthOpen(true);
+    setIsClosing(false);
+  };
+
+  const handleClose = () => {
+    setIsClosing(true);
+    setTimeout(() => {
+      setIsSelectMonthOpen(false);
+      setIsClosing(false);
+    }, 300);
+  };
+
+  const modalRef = useOutsideClick(handleClose, isSelectMonthOpen);
+
   return (
     <>
       <div className={s.calender_header}>
@@ -46,7 +69,20 @@ const Calender = ({
           >
             <ChevronRight size={32} />
           </button>
-          <button className={s.date_select_button}>月を選択</button>
+          <div className={s.select_month_wrapper} ref={modalRef}>
+            <button className={s.date_select_button} onClick={handleOpenModal}>
+              月を選択
+            </button>
+            {isSelectMonthOpen && (
+              <SelectMonthModal
+                selectedMonth={selectedMonth}
+                handleSelectedMonth={handleSelectedMonth}
+                setIsSelectMonthOpen={setIsSelectMonthOpen}
+                handleClose={handleClose}
+                isClosing={isClosing}
+              />
+            )}
+          </div>
         </div>
         <button className={s.budget_add_button}>予算の追加</button>
       </div>
