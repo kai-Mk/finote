@@ -1,28 +1,31 @@
 import React, { useState } from 'react';
 import { ChevronLeft, ChevronRight } from 'lucide-react';
-import s from './calender.module.scss';
+import s from './calenderContainer.module.scss';
 import SelectMonthModal from '../selectMonth/SelectMonthModal';
 import { useOutsideClick } from '@/hooks/useOutsideClick';
+import Calendar from '../calendar/Calendar';
+import { SelectedCalendarMonth, SelectedDate } from '../../types/calendar';
 
 type CalenderProps = {
-  selectedMonth: {
-    year: number;
-    month: number;
-  };
+  selectedCalendarMonth: SelectedCalendarMonth;
   handlePreviousMonth: () => void;
   handleNextMonth: () => void;
   handleSelectedMonth: (newMonth: { year: number; month: number }) => void;
+  onDateClick: (year: number, month: number, date: number) => void;
+  selectedDate: SelectedDate | null;
 };
 
-const Calender = ({
-  selectedMonth,
+const CalenderContainer = ({
+  selectedCalendarMonth,
   handlePreviousMonth,
   handleNextMonth,
   handleSelectedMonth,
+  onDateClick,
+  selectedDate,
 }: CalenderProps) => {
   const [isSelectMonthOpen, setIsSelectMonthOpen] = useState(false);
 
-  // モーダルk開閉
+  // モーダル開閉
   const [isClosing, setIsClosing] = useState(false);
   const handleOpenModal = () => {
     setIsSelectMonthOpen(true);
@@ -37,6 +40,7 @@ const Calender = ({
     }, 300);
   };
 
+  // モーダル外をクリックして閉じる
   const modalRef = useOutsideClick(handleClose, isSelectMonthOpen);
 
   return (
@@ -54,9 +58,11 @@ const Calender = ({
 
           <div className={s.calender_text_wrapper}>
             <span className={s.calender_text}>
-              <span className={s.year_text}>{selectedMonth.year}</span>
+              <span className={s.year_text}>{selectedCalendarMonth.year}</span>
               <span className={s.small_text}>年</span>
-              <span className={s.month_text}>{selectedMonth.month}</span>
+              <span className={s.month_text}>
+                {selectedCalendarMonth.month}
+              </span>
               <span className={s.small_text}>月</span>
             </span>
           </div>
@@ -75,9 +81,8 @@ const Calender = ({
             </button>
             {isSelectMonthOpen && (
               <SelectMonthModal
-                selectedMonth={selectedMonth}
+                selectedCalendarMonth={selectedCalendarMonth}
                 handleSelectedMonth={handleSelectedMonth}
-                setIsSelectMonthOpen={setIsSelectMonthOpen}
                 handleClose={handleClose}
                 isClosing={isClosing}
               />
@@ -86,8 +91,13 @@ const Calender = ({
         </div>
         <button className={s.budget_add_button}>予算の追加</button>
       </div>
+      <Calendar
+        selectedCalendarMonth={selectedCalendarMonth}
+        onDateClick={onDateClick}
+        selectedDate={selectedDate}
+      />
     </>
   );
 };
 
-export default Calender;
+export default CalenderContainer;

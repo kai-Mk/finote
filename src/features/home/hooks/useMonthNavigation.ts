@@ -27,7 +27,7 @@ export const useMonthNavigation = () => {
   );
 
   return {
-    selectedMonth,
+    selectedCalendarMonth: selectedMonth,
     handlePreviousMonth,
     handleNextMonth,
     handleSelectedMonth,

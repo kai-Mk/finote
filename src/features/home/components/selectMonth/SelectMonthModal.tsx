@@ -1,27 +1,23 @@
 import React, { useState } from 'react';
 import s from './selectMonth.module.scss';
+import { SelectedCalendarMonth } from '../../types/calendar';
 
 type SelectedMonthProps = {
-  selectedMonth: {
-    year: number;
-    month: number;
-  };
+  selectedCalendarMonth: SelectedCalendarMonth;
   handleSelectedMonth: (newMonth: { year: number; month: number }) => void;
-  setIsSelectMonthOpen: (isOpen: boolean) => void;
   handleClose: () => void;
   isClosing: boolean;
 };
 
 const SelectMonthModal = ({
-  selectedMonth,
+  selectedCalendarMonth,
   handleSelectedMonth,
-  setIsSelectMonthOpen,
   handleClose,
   isClosing,
 }: SelectedMonthProps) => {
   const [newDate, setNewDate] = useState({
-    year: selectedMonth.year,
-    month: selectedMonth.month,
+    year: selectedCalendarMonth.year,
+    month: selectedCalendarMonth.month,
   });
 
   // 現在から前後10年間の範囲

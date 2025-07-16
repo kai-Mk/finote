@@ -1,0 +1,110 @@
+@use '@/styles' as *;
+
+$sunday-color: #dc2626;
+$saturday-color: #2563eb;
+
+.calendar {
+  background-color: $background-color;
+  border: 1px solid $border-color;
+  border-radius: 16px;
+  overflow: hidden;
+  box-shadow: $card-box-shadow;
+  margin-top: 8px;
+  min-height: calc(100vh - 160px);
+  display: flex;
+  flex-direction: column;
+
+  .calendar_header {
+    display: grid;
+    grid-template-columns: repeat(7, 1fr);
+    border-bottom: 1px solid $border-color;
+    flex-shrink: 0;
+
+    .week_day {
+      padding: 8px;
+      text-align: center;
+      font-size: $font-size-xs;
+      font-weight: $font-weight-bold;
+      color: $main-text-color;
+
+      &.sunday {
+        color: $sunday-color;
+      }
+
+      &.saturday {
+        color: $saturday-color;
+      }
+    }
+  }
+
+  .calendar_body {
+    flex: 1;
+    display: grid;
+    grid-template-rows: repeat(6, 1fr);
+    gap: 0;
+
+    .week {
+      display: grid;
+      grid-template-columns: repeat(7, 1fr);
+
+      border-bottom: 1px solid $border-color;
+
+      &:last-child {
+        border-bottom: none;
+      }
+
+      .day {
+        position: relative;
+        padding: 4px;
+        border-right: 1px solid $border-color;
+        cursor: pointer;
+        transition: all $transition-normal;
+        display: flex;
+        flex-direction: column;
+
+        &:last-child {
+          border-right: none;
+        }
+
+        &:hover {
+          background: rgba($accent-color, 0.1);
+        }
+
+        &.today {
+          background: rgba($income-color, 0.1);
+
+          &:hover {
+            background: rgba($accent-color, 0.1);
+          }
+        }
+
+        &.selected {
+          background: rgba($accent-color, 0.2);
+        }
+
+        &.other_month {
+          background: rgba($sub-color, 0.05);
+          cursor: not-allowed;
+        }
+
+        &.holiday {
+          .date_number {
+            color: $sunday-color;
+          }
+        }
+
+        &.sunday {
+          .date_number {
+            color: $sunday-color;
+          }
+        }
+
+        &.saturday {
+          .date_number {
+            color: $saturday-color;
+          }
+        }
+      }
+    }
+  }
+}
