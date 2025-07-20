@@ -13,6 +13,7 @@ $saturday-color: #2563eb;
   min-height: calc(100vh - 160px);
   display: flex;
   flex-direction: column;
+  position: relative;
 
   .calendar_header {
     display: grid;
@@ -104,7 +105,34 @@ $saturday-color: #2563eb;
             color: $saturday-color;
           }
         }
+
+        .date_number {
+          font-size: $font-size-xs;
+          background: rgba($sub-color, 0.05);
+        }
+
+        .transaction_amount {
+          margin-top: 4px;
+          font-size: $font-size-xs;
+
+          .income {
+            display: block;
+            color: $income-color;
+          }
+          .expense {
+            display: block;
+            color: $expense-color;
+          }
+        }
       }
     }
+  }
+
+  // ローディング
+  .loading {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
   }
 }

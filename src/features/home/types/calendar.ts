@@ -4,7 +4,7 @@ export type CalendarData = {
   isToday: boolean;
   isSelected: boolean;
   isHoliday: boolean;
-  data?: {
+  transaction?: {
     income?: number;
     expense?: number;
     budget?: number;

@@ -1,5 +1,6 @@
 import { isHolidayFromData } from '../services/holidayAPI';
 import { CalendarData } from '../types/calendar';
+import { getDailyTransactionMap } from './getDailyTransactionMap';
 
 /**
  *
@@ -18,6 +19,9 @@ export const generateCalendarDays = async (
   const days: CalendarData[] = [];
   const currentDate = new Date(startDate);
 
+  // 日別取引データの取得
+  const dailyTransactionMap = await getDailyTransactionMap(year, month);
+
   // 6週分生成
   for (let i = 0; i < 42; i++) {
     const dateYear = currentDate.getFullYear();
@@ -33,12 +37,25 @@ export const generateCalendarDays = async (
     // 祝日判定
     const isHoliday = await isHolidayFromData(dateYear, dateMonth, dateDay);
 
+    let income = 0;
+    let expense = 0;
+
+    if (isCurrentMonth && dailyTransactionMap[dateDay]) {
+      income = dailyTransactionMap[dateDay].income;
+      expense = dailyTransactionMap[dateDay].expense;
+    }
+
     days.push({
       date: dateDay,
       isCurrentMonth,
       isToday,
       isSelected: false,
       isHoliday,
+      transaction: {
+        income,
+        expense,
+        budget: 0, // 予算は別途管理するため、ここでは0とする
+      },
     });
 
     currentDate.setDate(currentDate.getDate() + 1);

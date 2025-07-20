@@ -6,12 +6,11 @@
 
   .calender_wrapper {
     flex: 5;
-    padding: 16px 16px 0;
+    padding: 0 16px;
   }
 
   .transaction_detail_wrapper {
     flex: 2;
-    margin: 8px 0;
     padding: 0 8px;
     border-left: $border-color 3px solid;
   }
