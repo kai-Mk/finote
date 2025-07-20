@@ -165,8 +165,8 @@
     -webkit-tap-highlight-color: transparent;
 
     &:hover {
-      background: darken($income-color, 8%);
-      border-color: darken($income-color, 8%);
+      background: rgba($income-color, 8%);
+      border-color: rgba($income-color, 8%);
       transform: translateY(-1px);
       box-shadow: 0 4px 12px rgba($income-color, 0.3);
     }
@@ -178,7 +178,7 @@
 
     &:active {
       transform: translateY(0);
-      background: darken($income-color, 12%);
+      background: rgba($income-color, 12%);
       box-shadow: 0 2px 6px rgba($income-color, 0.2);
     }
 

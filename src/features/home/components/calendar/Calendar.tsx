@@ -10,6 +10,10 @@ import {
   SelectedCalendarMonth,
   SelectedDate,
 } from '../../types/calendar';
+import {
+  getDailyTransactionMap,
+  getMonthlyTransactionData,
+} from '../../services/transactionService';
 
 type CalendarProps = {
   selectedCalendarMonth: SelectedCalendarMonth;
@@ -33,7 +37,11 @@ const Calendar = ({
     const fetchCalendarData = async () => {
       setLoading(true);
       try {
-        const calendarDays = await generateCalendarDays(year, month);
+        const [calendarDays, dailyTransactions] = await Promise.all([
+          generateCalendarDays(year, month),
+          getDailyTransactionMap(year, month),
+        ]);
+        console.log(dailyTransactions);
         setDays(calendarDays);
       } catch (error) {
         console.error('カレンダーデータの取得に失敗:', error);
