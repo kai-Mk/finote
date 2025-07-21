@@ -9,13 +9,13 @@ const TotalBalance = () => {
         <div className={s.total_balance_grid_item}>
           <p className={s.total_balance_label}>収入</p>
           <p className={s.total_balance_value}>
-            <span className={s.dollar}>¥</span>20,000
+            <span className={s.yen_symbol}>¥</span>20,000
           </p>
         </div>
         <div className={s.total_balance_grid_item}>
           <p className={s.total_balance_label}>支出</p>
           <p className={s.total_balance_value}>
-            <span className={s.dollar}>¥</span>35,000
+            <span className={s.yen_symbol}>¥</span>35,000
           </p>
         </div>
       </div>
