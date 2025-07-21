@@ -107,62 +107,14 @@
       position: relative;
 
       .date_select_button {
-        font-size: $font-size-sm;
-        height: 40px;
-        padding: 0 16px;
-        background: rgba($income-color, 0.1);
-        color: $income-color;
-        border: none;
-        border-radius: 8px;
-        cursor: pointer;
-        transition: all $transition-normal;
-        white-space: nowrap;
-
-        // テキスト選択を無効化
-        user-select: none;
-        -webkit-user-select: none;
-        -moz-user-select: none;
-        -ms-user-select: none;
-        -webkit-tap-highlight-color: transparent;
-
-        &:hover {
-          @include button-hover($income-color);
-        }
-
-        &:focus {
-          outline: 2px solid rgba($income-color, 0.3);
-          outline-offset: 2px;
-        }
+        @include primary-button-color($income-color);
       }
     }
   }
 
   .budget_add_button {
-    font-size: $font-size-sm;
+    @include primary-button-color($budget-color);
     height: 100%;
     padding: 0 24px;
-    background: rgba($budget-color, 0.1);
-    color: $budget-color;
-    border: none;
-    border-radius: 8px;
-    cursor: pointer;
-    transition: all $transition-normal;
-    white-space: nowrap;
-
-    // テキスト選択を無効化
-    user-select: none;
-    -webkit-user-select: none;
-    -moz-user-select: none;
-    -ms-user-select: none;
-    -webkit-tap-highlight-color: transparent;
-
-    &:hover {
-      @include button-hover($budget-color);
-    }
-
-    &:focus {
-      outline: 2px solid rgba($budget-color, 0.3);
-      outline-offset: 2px;
-    }
   }
 }

@@ -63,6 +63,20 @@
   -ms-overflow-style: none;
 }
 
+// プライマリーボタンカラー
+@mixin primary-button-color($color) {
+  background: rgba($color, 0.1);
+  color: $color;
+
+  &:hover {
+    background: rgba($color, 0.2);
+  }
+
+  &:focus {
+    outline: 2px solid rgba($color, 0.3);
+  }
+}
+
 // ボタンホバー
 @mixin button-hover($color) {
   &:hover {

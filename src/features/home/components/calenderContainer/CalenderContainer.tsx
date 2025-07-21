@@ -5,6 +5,7 @@ import SelectMonthModal from '../selectMonth/SelectMonthModal';
 import { useOutsideClick } from '@/hooks/useOutsideClick';
 import Calendar from '../calendar/Calendar';
 import { SelectedCalendarMonth, SelectedDate } from '../../types/calendar';
+import PrimaryButton from '@/components/ui/primaryButton/PrimaryButton';
 
 type CalenderProps = {
   selectedCalendarMonth: SelectedCalendarMonth;
@@ -76,9 +77,11 @@ const CalenderContainer = ({
             <ChevronRight size={32} />
           </button>
           <div className={s.select_month_wrapper} ref={modalRef}>
-            <button className={s.date_select_button} onClick={handleOpenModal}>
-              月を選択
-            </button>
+            <PrimaryButton
+              className={s.date_select_button}
+              onButtonClick={handleOpenModal}
+              label="月を選択"
+            />
             {isSelectMonthOpen && (
               <SelectMonthModal
                 selectedCalendarMonth={selectedCalendarMonth}
@@ -89,7 +92,7 @@ const CalenderContainer = ({
             )}
           </div>
         </div>
-        <button className={s.budget_add_button}>予算の追加</button>
+        <PrimaryButton className={s.budget_add_button} label="予算の追加" />
       </div>
       <Calendar
         selectedCalendarMonth={selectedCalendarMonth}

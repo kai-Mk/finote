@@ -1,0 +1,27 @@
+@use '@/styles' as *;
+
+.primary_button {
+  font-size: $font-size-sm;
+  height: 40px;
+  padding: 0 16px;
+  border: none;
+  border-radius: 8px;
+  cursor: pointer;
+  transition: all $transition-normal;
+  white-space: nowrap;
+
+  // テキスト選択を無効化
+  user-select: none;
+  -webkit-user-select: none;
+  -moz-user-select: none;
+  -ms-user-select: none;
+  -webkit-tap-highlight-color: transparent;
+
+  &:hover {
+    transform: scale(1.05);
+  }
+
+  &:focus {
+    outline-offset: 2px;
+  }
+}
