@@ -1,0 +1,14 @@
+@use '@/styles' as *;
+
+.balance_detail_list {
+  flex: 1;
+  min-height: 0;
+  overflow-y: auto;
+
+  @include scrollbar;
+
+  .balance_detail_list_item {
+    height: 50px;
+    flex-shrink: 0;
+  }
+}

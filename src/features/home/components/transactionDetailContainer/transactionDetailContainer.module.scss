@@ -1,7 +1,6 @@
 @use '@/styles' as *;
 
 .transaction_detail_container {
-  border: 1px solid;
   width: 100%;
   height: 100%;
   display: flex;
@@ -10,15 +9,33 @@
   .transaction_detail_main {
     border: 1px solid red;
     height: 100%;
+    width: 100%;
     display: flex;
     flex-direction: column;
     align-items: center;
+    min-height: 0;
 
     .transaction_detail_date {
       font-size: $font-size-md;
       text-align: center;
     }
+
+    .transaction_add_buttons {
+      margin-top: 16px;
+      display: flex;
+      gap: 16px;
+      flex-shrink: 0;
+
+      .income {
+        @include primary-button-color($income-color);
+      }
+      .expense {
+        @include primary-button-color($expense-color);
+      }
+    }
   }
+
+  // 選択された日付がない時のスタイル
   .not_selected_text {
     flex: 1;
     display: flex;

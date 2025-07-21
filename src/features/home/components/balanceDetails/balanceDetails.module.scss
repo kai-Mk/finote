@@ -1,0 +1,45 @@
+@use '@/styles' as *;
+
+.balance_details {
+  margin-top: 24px;
+  width: 100%;
+  flex: 1;
+  min-height: 0;
+  display: flex;
+  flex-direction: column;
+
+  .balance_details_title {
+    font-size: $font-size-md;
+    text-align: left;
+    flex-shrink: 0;
+  }
+
+  .balance_details_grid {
+    margin-top: 4px;
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 8px;
+    flex: 1;
+    min-height: 0;
+
+    .balance_details_grid_item {
+      display: flex;
+      flex-direction: column;
+      min-height: 0;
+
+      .balance_details_label {
+        font-size: $font-size-sm;
+        font-weight: $font-weight-bold;
+        flex-shrink: 0;
+
+        &.income {
+          color: $income-color;
+        }
+
+        &.expense {
+          color: $expense-color;
+        }
+      }
+    }
+  }
+}

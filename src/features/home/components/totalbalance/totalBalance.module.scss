@@ -1,0 +1,33 @@
+@use '@/styles' as *;
+
+.total_balance {
+  margin-top: 16px;
+  width: 100%;
+
+  .total_balance_title {
+    font-size: $font-size-md;
+    text-align: left;
+  }
+
+  .total_balance_grid {
+    margin-top: 4px;
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 8px;
+
+    .total_balance_label {
+      font-size: $font-size-xs;
+    }
+
+    .total_balance_value {
+      font-size: $font-size-md;
+      margin-top: 16px;
+      text-align: right;
+
+      .dollar {
+        font-size: $font-size-xs;
+        padding-right: 4px;
+      }
+    }
+  }
+}
