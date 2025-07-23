@@ -50,10 +50,23 @@
       margin-top: 8px;
       font-size: $font-size-md;
 
+      &.income {
+        color: $income-color;
+      }
+      &.expense {
+        color: $expense-color;
+      }
+
       .yen_symbol {
         font-size: $font-size-xs;
         padding-right: 4px;
+        color: $main-text-color;
       }
     }
+  }
+
+  .no_transaction {
+    font-size: $font-size-xs;
+    color: $sub-text-color;
   }
 }

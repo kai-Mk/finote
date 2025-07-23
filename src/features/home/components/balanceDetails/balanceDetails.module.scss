@@ -28,17 +28,9 @@
       min-height: 0;
 
       .balance_details_label {
-        font-size: $font-size-sm;
+        font-size: $font-size-xs;
         font-weight: $font-weight-bold;
         flex-shrink: 0;
-
-        &.income {
-          color: $income-color;
-        }
-
-        &.expense {
-          color: $expense-color;
-        }
       }
     }
   }

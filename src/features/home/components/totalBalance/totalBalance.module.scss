@@ -17,16 +17,27 @@
 
     .total_balance_label {
       font-size: $font-size-xs;
+      font-weight: $font-weight-bold;
     }
 
     .total_balance_value {
       font-size: $font-size-md;
       margin-top: 16px;
       text-align: right;
+      font-weight: $font-weight-semibold;
+
+      &.income {
+        color: $income-color;
+      }
+      &.expense {
+        color: $expense-color;
+      }
 
       .yen_symbol {
         font-size: $font-size-xs;
         padding-right: 4px;
+        color: $main-text-color;
+        font-weight: $font-weight-normal;
       }
     }
   }
