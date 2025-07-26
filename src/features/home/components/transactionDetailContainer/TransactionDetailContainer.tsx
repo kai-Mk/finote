@@ -30,7 +30,7 @@ const TransactionDetailContainer = ({
         <div className={s.loading}>
           <LoadingSpinner />
         </div>
-      ) : inputType ? (
+      ) : inputType && selectedDate ? (
         <TransactionInputContainer
           inputType={inputType}
           setInputType={setInputType}

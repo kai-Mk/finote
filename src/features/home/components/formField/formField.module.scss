@@ -1,0 +1,40 @@
+@use '@/styles' as *;
+
+.form_field {
+  margin-bottom: 16px;
+
+  .form_label {
+    font-size: $font-size-sm;
+    font-weight: $font-weight-bold;
+    display: block;
+
+    .required {
+      background-color: $error-color;
+      color: $white-text-color;
+      font-weight: $font-weight-normal;
+      font-size: $font-size-xs;
+      margin-left: 8px;
+      border-radius: 8px;
+      padding: 2px 8px;
+      display: inline-block;
+      vertical-align: middle;
+      line-height: 1.2;
+      min-height: 18px;
+      text-align: center;
+    }
+  }
+
+  .helper_text {
+    font-size: $font-size-xs;
+    color: $sub-text-color;
+    line-height: 1.4;
+  }
+
+  .error_message {
+    display: block;
+    color: $error-color;
+    font-size: $font-size-xs;
+    margin-top: 4px;
+    line-height: 1.4;
+  }
+}

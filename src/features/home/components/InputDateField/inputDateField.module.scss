@@ -1,0 +1,30 @@
+@use '@/styles' as *;
+
+.input_date_field {
+  margin-top: 4px;
+  width: 100%;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+
+  .selected_date_container {
+    display: flex;
+    align-items: center;
+    gap: 4px;
+
+    .select {
+      min-width: 60px;
+      height: 30px;
+      border-radius: 30px;
+      background-color: $input-background-color;
+      font-size: $font-size-xs;
+      border: 1px solid $border-color;
+      box-shadow: 0 0 2px 2px rgba($sub-color, 0.1) inset;
+      padding: 0 4px;
+
+      &:focus {
+        outline: 2px solid $input-focus-color;
+      }
+    }
+  }
+}
