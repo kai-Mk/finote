@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { SelectedDate } from '@/features/home/types/calendar';
 import s from './transactionDetailContainer.module.scss';
 import { getTransactionDetailDate } from '../../utils/getTransactionDetailDate';
@@ -23,6 +23,10 @@ const TransactionDetailContainer = ({
 
   // 収支入力管理
   const [inputType, setInputType] = useState<'income' | 'expense' | null>(null);
+  useEffect(() => {
+    // 選択された日付が変更されたときに収支入力をリセット
+    setInputType(null);
+  }, [selectedDate]);
 
   return (
     <div className={s.transaction_detail_container}>
