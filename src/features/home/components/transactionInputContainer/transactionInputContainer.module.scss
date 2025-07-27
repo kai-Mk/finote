@@ -1,7 +1,6 @@
 @use '@/styles' as *;
 
 .transaction_input_container {
-  border: 1px solid red;
   width: 100%;
   height: 100%;
   overflow: hidden;
@@ -11,20 +10,44 @@
     align-items: center;
     justify-content: space-between;
     flex-shrink: 0;
+    margin-bottom: 16px;
 
     .transaction_input_title {
       font-size: $font-size-lg;
       font-weight: $font-weight-bold;
+      position: relative;
+
+      &:before {
+        content: '';
+        position: absolute;
+        bottom: 0;
+        left: 0;
+        display: inline-block;
+        width: 100%;
+        height: 16px;
+      }
+
+      &.income:before {
+        background: rgba($income-color, 0.1);
+      }
+
+      &.expense:before {
+        background: rgba($expense-color, 0.1);
+      }
     }
 
     .transaction_input_close_icon {
       cursor: pointer;
       margin-right: 8px;
+      transition: all $transition-normal;
+
+      &:hover {
+        transform: scale(1.1);
+      }
     }
   }
 
   .transaction_input_form {
-    margin-top: 8px;
     height: 100%;
 
     overflow-y: auto;

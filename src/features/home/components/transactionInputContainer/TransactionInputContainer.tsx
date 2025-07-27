@@ -26,6 +26,7 @@ const TransactionInputContainer = ({
   selectedDate,
 }: TransactionInputContainerProps) => {
   const InputTypeLabel = inputType === 'income' ? '収入' : '支出';
+  const inputTypeClass = inputType === 'income' ? s.income : s.expense;
   const { year, month, date } = selectedDate;
   // react-hook-formのセットアップ
   const {
@@ -46,7 +47,9 @@ const TransactionInputContainer = ({
   return (
     <div className={s.transaction_input_container}>
       <div className={s.transaction_input_header}>
-        <h2 className={s.transaction_input_title}>{InputTypeLabel}の入力</h2>
+        <h2 className={`${s.transaction_input_title} ${inputTypeClass}`}>
+          {InputTypeLabel}の入力
+        </h2>
         <CircleX
           className={s.transaction_input_close_icon}
           size={32}
