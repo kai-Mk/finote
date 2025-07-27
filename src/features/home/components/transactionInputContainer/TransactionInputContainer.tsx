@@ -62,8 +62,6 @@ const TransactionInputContainer = ({
     }
   };
 
-  console.log(methods.formState.errors);
-
   return (
     <div className={s.transaction_input_container}>
       <div className={s.transaction_input_header}>
@@ -120,6 +118,7 @@ const TransactionInputContainer = ({
                 { value: '1', label: '食費' },
                 { value: '2', label: '交通費' },
               ]}
+              name="mainCategoryId"
             />
           </FormField>
           {/* サブカテゴリー入力フィールド */}
@@ -135,6 +134,7 @@ const TransactionInputContainer = ({
                 { value: '1', label: '外食' },
                 { value: '2', label: '自炊' },
               ]}
+              name="subCategoryId"
             />
           </FormField>
           {/* 紐づけ予算フィールド */}
@@ -150,6 +150,7 @@ const TransactionInputContainer = ({
                 { value: '1', label: '今月の予算' },
                 { value: '2', label: '旅行予算' },
               ]}
+              name="budgetId"
             />
           </FormField>
           {/* 支払い方法選択フィールド */}
@@ -166,7 +167,7 @@ const TransactionInputContainer = ({
                 { id: '3', label: '現金' },
                 { id: '4', label: '電子マネー' },
               ]}
-              radioButtonName="paymentMethod"
+              name="paymentMethodId"
             />
           </FormField>
           {/* 取引メモ入力フィールド */}
@@ -176,7 +177,12 @@ const TransactionInputContainer = ({
             helperText={'500文字以内で入力してください'}
             errorMsg={methods.formState.errors.description?.message}
           >
-            <InputTextArea id="description" />
+            <InputTextArea
+              id="description"
+              name="description"
+              placeholder="取引メモを入力してください"
+              maxLength={500}
+            />
           </FormField>
 
           {/* 送信ボタン */}
