@@ -8,6 +8,7 @@ import BalanceDetails from '../balanceDetails/BalanceDetails';
 import { useTransitionByDate } from '../../hooks/useTransactionByDate';
 import LoadingSpinner from '@/components/ui/loading/LoadingSpinner';
 import TransactionInputContainer from '../transactionInputContainer/TransactionInputContainer';
+import { getIsDisplayButton } from '../../utils/getIsDisplayButton';
 
 type TransactionDetailContainerProps = {
   selectedDate: SelectedDate | null;
@@ -23,9 +24,13 @@ const TransactionDetailContainer = ({
 
   // 収支入力管理
   const [inputType, setInputType] = useState<'income' | 'expense' | null>(null);
+  const [isDisplayButton, setIsDisplayButton] = useState(false);
   useEffect(() => {
     // 選択された日付が変更されたときに収支入力をリセット
     setInputType(null);
+    if (selectedDate) {
+      setIsDisplayButton(getIsDisplayButton(selectedDate));
+    }
   }, [selectedDate]);
 
   return (
@@ -43,18 +48,20 @@ const TransactionDetailContainer = ({
       ) : selectedDate ? (
         <div className={s.transaction_detail_main}>
           <h2 className={s.transaction_detail_date}>{transactionDetailDate}</h2>
-          <div className={s.transaction_add_buttons}>
-            <PrimaryButton
-              label="収入を追加"
-              className={s.income}
-              onButtonClick={() => setInputType('income')}
-            />
-            <PrimaryButton
-              label="支出を追加"
-              className={s.expense}
-              onButtonClick={() => setInputType('expense')}
-            />
-          </div>
+          {isDisplayButton && (
+            <div className={s.transaction_add_buttons}>
+              <PrimaryButton
+                label="収入を追加"
+                className={s.income}
+                onButtonClick={() => setInputType('income')}
+              />
+              <PrimaryButton
+                label="支出を追加"
+                className={s.expense}
+                onButtonClick={() => setInputType('expense')}
+              />
+            </div>
+          )}
           <TotalBalance transactionDetailData={transactionDetailData} />
           <BalanceDetails transactionDetailData={transactionDetailData} />
         </div>
