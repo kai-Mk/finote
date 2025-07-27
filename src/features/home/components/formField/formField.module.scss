@@ -1,7 +1,9 @@
 @use '@/styles' as *;
 
 .form_field {
+  padding-bottom: 16px;
   margin-bottom: 16px;
+  position: relative;
 
   .form_label {
     font-size: $font-size-sm;
@@ -31,6 +33,9 @@
   }
 
   .error_message {
+    position: absolute;
+    bottom: -4px;
+    left: 0;
     display: block;
     color: $error-color;
     font-size: $font-size-xs;

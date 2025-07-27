@@ -37,5 +37,17 @@
       margin-left: 4px;
       margin-right: 4px;
     }
+
+    .transaction_input_button_wrapper {
+      display: flex;
+      justify-content: center;
+      margin-top: 16px;
+      height: 100px;
+
+      .submit_button {
+        width: 50%;
+        @include primary-button-color($submit-button-color);
+      }
+    }
   }
 }

@@ -12,6 +12,7 @@ import InputDateField from '../InputDateField/InputDateField';
 import InputSelectBox from '@/components/ui/inputSelectBox/InputSelectBox';
 import InputRadioButton from '@/components/ui/inputRadioButton/InputRadioButton';
 import InputTextArea from '@/components/ui/inputTextArea/InputTextArea';
+import PrimaryButton from '@/components/ui/primaryButton/PrimaryButton';
 
 type TransactionInputContainerProps = {
   inputType: 'income' | 'expense' | null;
@@ -90,19 +91,11 @@ const TransactionInputContainer = ({
           <InputSelectBox id="mainCategory" optionData={[]} />
         </FormField>
         {/* サブカテゴリー入力フィールド */}
-        <FormField
-          id="subCategory"
-          label="サブカテゴリー"
-          errorMsg={'サブカテゴリーを選択してください'}
-        >
+        <FormField id="subCategory" label="サブカテゴリー">
           <InputSelectBox id="subCategory" optionData={[]} />
         </FormField>
         {/* 紐づけ予算フィールド */}
-        <FormField
-          id="budget"
-          label="紐づけ予算"
-          errorMsg={'紐づけ予算を選択してください'}
-        >
+        <FormField id="budget" label="紐づけ予算">
           <InputSelectBox id="budget" optionData={[]} />
         </FormField>
         {/* 支払い方法選択フィールド */}
@@ -124,6 +117,11 @@ const TransactionInputContainer = ({
         <FormField id="description" label="取引メモ" errorMsg={undefined}>
           <InputTextArea id="description" />
         </FormField>
+
+        {/* 送信ボタン */}
+        <div className={s.transaction_input_button_wrapper}>
+          <PrimaryButton label="送信する" className={s.submit_button} />
+        </div>
       </form>
     </div>
   );

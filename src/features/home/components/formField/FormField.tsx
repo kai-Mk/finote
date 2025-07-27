@@ -7,7 +7,7 @@ type FormFieldProps = {
   required?: boolean;
   helperText?: string;
   children: ReactNode;
-  errorMsg: string | undefined;
+  errorMsg?: string | undefined;
 };
 
 const FormField = ({
