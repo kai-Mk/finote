@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import { type Dispatch, type SetStateAction } from 'react';
 import s from './transactionInputContainer.module.scss';
 import { CircleX } from 'lucide-react';
@@ -16,6 +16,9 @@ import InputSelectBox from '@/components/ui/inputSelectBox/InputSelectBox';
 import InputRadioButton from '@/components/ui/inputRadioButton/InputRadioButton';
 import InputTextArea from '@/components/ui/inputTextArea/InputTextArea';
 import PrimaryButton from '@/components/ui/primaryButton/PrimaryButton';
+import { getMainCategoryDataUsedInForm } from '../../services/mainCategoryService';
+import { MainCategoryDataUsedInForm } from '../../types/mainCategory';
+import { SelectBoxData } from '../../types/input';
 
 type TransactionInputContainerProps = {
   inputType: 'income' | 'expense' | null;
@@ -61,6 +64,36 @@ const TransactionInputContainer = ({
       console.error('送信エラー:', error);
     }
   };
+
+  // 選択データの取得
+  const [mainCategoryData, setMainCategoryData] = useState<
+    MainCategoryDataUsedInForm[]
+  >([]);
+  useEffect(() => {
+    const fetchMainCategories = async () => {
+      if (!inputType) return;
+      const categories = await getMainCategoryDataUsedInForm(inputType);
+      setMainCategoryData(categories);
+    };
+
+    fetchMainCategories();
+  }, [inputType]);
+
+  // サブカテゴリーのデータをメインカテゴリーの選択に応じて更新
+  const [subCategoryData, setSubCategoryData] = useState<SelectBoxData[]>([]);
+  const currentMainCategoryId = methods.watch('mainCategoryId');
+  useEffect(() => {
+    const fetchSubCategories = async () => {
+      const selectedMainCategory = mainCategoryData.find(
+        (cat) => String(cat.id) === currentMainCategoryId
+      );
+      if (selectedMainCategory) {
+        setSubCategoryData(selectedMainCategory.subCategories);
+      }
+    };
+
+    fetchSubCategories();
+  }, [currentMainCategoryId, methods]);
 
   return (
     <div className={s.transaction_input_container}>
@@ -113,11 +146,7 @@ const TransactionInputContainer = ({
           >
             <InputSelectBox
               id="mainCategory"
-              optionData={[
-                // TODO: APIから取得したデータを設定
-                { value: '1', label: '食費' },
-                { value: '2', label: '交通費' },
-              ]}
+              optionData={mainCategoryData}
               name="mainCategoryId"
             />
           </FormField>
@@ -129,11 +158,7 @@ const TransactionInputContainer = ({
           >
             <InputSelectBox
               id="subCategory"
-              optionData={[
-                // TODO: メインカテゴリーに応じて動的に変更
-                { value: '1', label: '外食' },
-                { value: '2', label: '自炊' },
-              ]}
+              optionData={subCategoryData}
               name="subCategoryId"
             />
           </FormField>
@@ -147,8 +172,8 @@ const TransactionInputContainer = ({
               id="budget"
               optionData={[
                 // TODO: APIから取得したデータを設定
-                { value: '1', label: '今月の予算' },
-                { value: '2', label: '旅行予算' },
+                { id: 1, name: '今月の予算' },
+                { id: 2, name: '旅行予算' },
               ]}
               name="budgetId"
             />

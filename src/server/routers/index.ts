@@ -1,4 +1,5 @@
 import { router } from '../trpc';
+import { MainCategoryRouter } from './mainCategory';
 import { transactionRouter } from './transaction';
 
 /**
@@ -8,6 +9,7 @@ import { transactionRouter } from './transaction';
 export const appRouter = router({
   // 取引関連のAPIルーター
   transactions: transactionRouter,
+  mainCategories: MainCategoryRouter,
 });
 
 /**

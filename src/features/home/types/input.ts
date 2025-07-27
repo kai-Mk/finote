@@ -3,3 +3,8 @@ export type SelectableDate = {
   months: { value: number; disabled: boolean }[];
   days: { value: number; disabled: boolean }[];
 };
+
+export type SelectBoxData = {
+  id: number;
+  name: string;
+};
