@@ -25,6 +25,7 @@
 
   .transaction_input_form {
     margin-top: 8px;
+    height: 100%;
 
     overflow-y: auto;
     @include scrollbar;

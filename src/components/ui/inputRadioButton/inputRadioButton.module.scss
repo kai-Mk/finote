@@ -1,0 +1,12 @@
+@use '@/styles' as *;
+
+.input_radio_button {
+  display: flex;
+  flex-direction: column;
+
+  .radio_label {
+    .radio_input {
+      margin-right: 4px;
+    }
+  }
+}

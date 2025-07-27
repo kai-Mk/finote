@@ -9,6 +9,9 @@ import { SelectedDate } from '../../types/calendar';
 import InputField from '@/components/ui/inputField/InputField';
 import FormField from '../formField/FormField';
 import InputDateField from '../InputDateField/InputDateField';
+import InputSelectBox from '@/components/ui/inputSelectBox/InputSelectBox';
+import InputRadioButton from '@/components/ui/inputRadioButton/InputRadioButton';
+import InputTextArea from '@/components/ui/inputTextArea/InputTextArea';
 
 type TransactionInputContainerProps = {
   inputType: 'income' | 'expense' | null;
@@ -50,6 +53,7 @@ const TransactionInputContainer = ({
         />
       </div>
       <form className={s.transaction_input_form}>
+        {/* 金額入力フィールド */}
         <FormField
           id="amount"
           label="金額"
@@ -66,6 +70,7 @@ const TransactionInputContainer = ({
             {...register('amount')}
           />
         </FormField>
+        {/* 日付入力フィールド */}
         <FormField
           id="date"
           label="日付"
@@ -74,6 +79,50 @@ const TransactionInputContainer = ({
           errorMsg={'日付で入力してください'}
         >
           <InputDateField selectedDate={selectedDate} />
+        </FormField>
+        {/* メインカテゴリー入力フィールド */}
+        <FormField
+          id="mainCategory"
+          label="メインカテゴリー"
+          required
+          errorMsg={'メインカテゴリーを選択してください'}
+        >
+          <InputSelectBox id="mainCategory" optionData={[]} />
+        </FormField>
+        {/* サブカテゴリー入力フィールド */}
+        <FormField
+          id="subCategory"
+          label="サブカテゴリー"
+          errorMsg={'サブカテゴリーを選択してください'}
+        >
+          <InputSelectBox id="subCategory" optionData={[]} />
+        </FormField>
+        {/* 紐づけ予算フィールド */}
+        <FormField
+          id="budget"
+          label="紐づけ予算"
+          errorMsg={'紐づけ予算を選択してください'}
+        >
+          <InputSelectBox id="budget" optionData={[]} />
+        </FormField>
+        {/* 支払い方法選択フィールド */}
+        <FormField
+          id="paymentMethod"
+          label="支払い方法"
+          required
+          errorMsg={'支払い方法を選択してください'}
+        >
+          <InputRadioButton
+            radioButtonData={[
+              { id: 'creditCard', label: 'クレジットカード' },
+              { id: 'bankTransfer', label: '銀行振込' },
+            ]}
+            radioButtonName="paymentMethod"
+          />
+        </FormField>
+        {/* 取引メモ入力フィールド */}
+        <FormField id="description" label="取引メモ" errorMsg={undefined}>
+          <InputTextArea id="description" />
         </FormField>
       </form>
     </div>
