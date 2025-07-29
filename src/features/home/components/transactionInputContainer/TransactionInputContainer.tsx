@@ -19,6 +19,7 @@ import PrimaryButton from '@/components/ui/primaryButton/PrimaryButton';
 import { getMainCategoryDataUsedInForm } from '../../services/mainCategoryService';
 import { MainCategoryDataUsedInForm } from '../../types/mainCategory';
 import { SelectBoxData } from '../../types/input';
+import { getBudgetDataUsedInForm } from '../../services/budgetService';
 
 type TransactionInputContainerProps = {
   inputType: 'income' | 'expense' | null;
@@ -69,6 +70,8 @@ const TransactionInputContainer = ({
   const [mainCategoryData, setMainCategoryData] = useState<
     MainCategoryDataUsedInForm[]
   >([]);
+  const [budgetData, setBudgetData] = useState<SelectBoxData[]>([]);
+
   useEffect(() => {
     const fetchMainCategories = async () => {
       if (!inputType) return;
@@ -76,7 +79,13 @@ const TransactionInputContainer = ({
       setMainCategoryData(categories);
     };
 
+    const fetchBudgets = async () => {
+      const budgets = await getBudgetDataUsedInForm();
+      setBudgetData(budgets);
+    };
+
     fetchMainCategories();
+    fetchBudgets();
   }, [inputType]);
 
   // サブカテゴリーのデータをメインカテゴリーの選択に応じて更新
@@ -170,11 +179,7 @@ const TransactionInputContainer = ({
           >
             <InputSelectBox
               id="budget"
-              optionData={[
-                // TODO: APIから取得したデータを設定
-                { id: 1, name: '今月の予算' },
-                { id: 2, name: '旅行予算' },
-              ]}
+              optionData={budgetData}
               name="budgetId"
             />
           </FormField>

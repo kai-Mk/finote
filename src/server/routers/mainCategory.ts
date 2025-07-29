@@ -7,7 +7,6 @@ import {
 } from '@/lib/validations/mainCategory';
 import { publicProcedure, router } from '../trpc';
 import { TRPCError } from '@trpc/server';
-import { create } from 'domain';
 
 export const MainCategoryRouter = router({
   /**
@@ -79,6 +78,18 @@ export const MainCategoryRouter = router({
             id: input.id,
             deletedAt: null,
           },
+          include: {
+            ...(input.includeSubCategories && {
+              subCategories: {
+                where: {
+                  deletedAt: null,
+                },
+                orderBy: {
+                  name: 'asc',
+                },
+              },
+            }),
+          },
         });
 
         if (!mainCategory) {
@@ -127,6 +138,16 @@ export const MainCategoryRouter = router({
           data: {
             name: input.name,
             type: input.type,
+          },
+          include: {
+            subCategories: {
+              where: {
+                deletedAt: null,
+              },
+              orderBy: {
+                name: 'asc',
+              },
+            },
           },
         });
 
@@ -187,6 +208,16 @@ export const MainCategoryRouter = router({
           data: {
             ...updateData,
             updatedAt: new Date(),
+          },
+          include: {
+            subCategories: {
+              where: {
+                deletedAt: null,
+              },
+              orderBy: {
+                name: 'asc',
+              },
+            },
           },
         });
 
