@@ -18,8 +18,9 @@ import InputTextArea from '@/components/ui/inputTextArea/InputTextArea';
 import PrimaryButton from '@/components/ui/primaryButton/PrimaryButton';
 import { getMainCategoryDataUsedInForm } from '../../services/mainCategoryService';
 import { MainCategoryDataUsedInForm } from '../../types/mainCategory';
-import { SelectBoxData } from '../../types/input';
+import { RadioButtonData, SelectBoxData } from '../../types/input';
 import { getBudgetDataUsedInForm } from '../../services/budgetService';
+import { getPaymentMethodDataUsedInForm } from '../../services/paymentMethodService';
 
 type TransactionInputContainerProps = {
   inputType: 'income' | 'expense' | null;
@@ -71,6 +72,9 @@ const TransactionInputContainer = ({
     MainCategoryDataUsedInForm[]
   >([]);
   const [budgetData, setBudgetData] = useState<SelectBoxData[]>([]);
+  const [paymentMethodData, setPaymentMethodData] = useState<RadioButtonData[]>(
+    []
+  );
 
   useEffect(() => {
     const fetchMainCategories = async () => {
@@ -84,9 +88,16 @@ const TransactionInputContainer = ({
       setBudgetData(budgets);
     };
 
+    const fetchPaymentMethods = async () => {
+      const paymentMethods = await getPaymentMethodDataUsedInForm();
+      setPaymentMethodData(paymentMethods);
+    };
+
     fetchMainCategories();
     fetchBudgets();
+    fetchPaymentMethods();
   }, [inputType]);
+  console.log(paymentMethodData);
 
   // サブカテゴリーのデータをメインカテゴリーの選択に応じて更新
   const [subCategoryData, setSubCategoryData] = useState<SelectBoxData[]>([]);
@@ -191,12 +202,7 @@ const TransactionInputContainer = ({
             errorMsg={methods.formState.errors.paymentMethodId?.message}
           >
             <InputRadioButton
-              radioButtonData={[
-                { id: '1', label: 'クレジットカード' },
-                { id: '2', label: '銀行振込' },
-                { id: '3', label: '現金' },
-                { id: '4', label: '電子マネー' },
-              ]}
+              radioButtonData={paymentMethodData}
               name="paymentMethodId"
             />
           </FormField>

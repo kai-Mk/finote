@@ -8,3 +8,8 @@ export type SelectBoxData = {
   id: number;
   name: string;
 };
+
+export type RadioButtonData = {
+  id: number;
+  label: string;
+};

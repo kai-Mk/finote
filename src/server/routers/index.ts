@@ -1,6 +1,7 @@
 import { router } from '../trpc';
 import { budgetRouter } from './budget';
 import { MainCategoryRouter } from './mainCategory';
+import { paymentMethodRouter } from './paymentMethod';
 import { transactionRouter } from './transaction';
 
 /**
@@ -12,6 +13,7 @@ export const appRouter = router({
   transactions: transactionRouter,
   mainCategories: MainCategoryRouter,
   budgets: budgetRouter,
+  paymentMethods: paymentMethodRouter,
 });
 
 /**

@@ -1,9 +1,10 @@
 import React, { useEffect } from 'react';
 import s from './inputRadioButton.module.scss';
 import { useFormContext } from 'react-hook-form';
+import { RadioButtonData } from '@/features/home/types/input';
 
 type InputRadioButtonProps = {
-  radioButtonData: { id: string; label: string }[];
+  radioButtonData: RadioButtonData[];
   name: string;
 };
 
@@ -24,10 +25,14 @@ const InputRadioButton = ({ radioButtonData, name }: InputRadioButtonProps) => {
     <div className={s.input_radio_button}>
       {radioButtonData && radioButtonData.length !== 0
         ? radioButtonData.map((item) => (
-            <label key={item.id} className={s.radio_label} htmlFor={item.id}>
+            <label
+              key={item.id}
+              className={s.radio_label}
+              htmlFor={String(item.id)}
+            >
               <input
                 type="radio"
-                id={item.id}
+                id={String(item.id)}
                 className={s.radio_input}
                 value={item.id}
                 {...register(name)}
