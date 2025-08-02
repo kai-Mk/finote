@@ -1,24 +1,29 @@
 import React from 'react';
 import s from './calendar.module.scss';
 import { groupDaysByWeeks, WEEK_DAYS } from '../../utils/calendar';
-import { SelectedCalendarMonth, SelectedDate } from '../../types/calendar';
-import { useCalendarData } from '../../hooks/useCalendarData';
+import {
+  CalendarData,
+  SelectedCalendarMonth,
+  SelectedDate,
+} from '../../types/calendar';
 import LoadingSpinner from '@/components/ui/loading/LoadingSpinner';
 
 type CalendarProps = {
   selectedCalendarMonth: SelectedCalendarMonth;
   onDateClick: (year: number, month: number, date: number) => void;
   selectedDate: SelectedDate | null;
+  days: CalendarData[];
+  loading: boolean;
 };
 
 const Calendar = ({
   selectedCalendarMonth,
   onDateClick,
   selectedDate,
+  days,
+  loading,
 }: CalendarProps) => {
   const { year, month } = selectedCalendarMonth;
-
-  const { days, loading } = useCalendarData(year, month);
 
   const weeks = groupDaysByWeeks(days);
 

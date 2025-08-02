@@ -1,11 +1,12 @@
 import React, { useState } from 'react';
-import { ChevronLeft, ChevronRight } from 'lucide-react';
+import { ChevronLeft, ChevronRight, RotateCcw } from 'lucide-react';
 import s from './calenderContainer.module.scss';
 import SelectMonthModal from '../selectMonth/SelectMonthModal';
 import { useOutsideClick } from '@/hooks/useOutsideClick';
 import Calendar from '../calendar/Calendar';
 import { SelectedCalendarMonth, SelectedDate } from '../../types/calendar';
 import PrimaryButton from '@/components/ui/primaryButton/PrimaryButton';
+import { useCalendarData } from '../../hooks/useCalendarData';
 
 type CalenderProps = {
   selectedCalendarMonth: SelectedCalendarMonth;
@@ -40,6 +41,10 @@ const CalenderContainer = ({
       setIsClosing(false);
     }, 300);
   };
+
+  const { year, month } = selectedCalendarMonth;
+
+  const { days, loading, refetch } = useCalendarData(year, month);
 
   // モーダル外をクリックして閉じる
   const modalRef = useOutsideClick(handleClose, isSelectMonthOpen);
@@ -91,6 +96,10 @@ const CalenderContainer = ({
               />
             )}
           </div>
+          <div className={s.refresh_icon_wrapper}>
+            <div className={s.refresh_tooltip}>カレンダーを更新する</div>
+            <RotateCcw className={s.refresh_icon} onClick={refetch} />
+          </div>
         </div>
         <PrimaryButton className={s.budget_add_button} label="予算の追加" />
       </div>
@@ -98,6 +107,8 @@ const CalenderContainer = ({
         selectedCalendarMonth={selectedCalendarMonth}
         onDateClick={onDateClick}
         selectedDate={selectedDate}
+        days={days}
+        loading={loading}
       />
     </>
   );

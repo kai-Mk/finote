@@ -110,6 +110,47 @@
         @include primary-button-color($income-color);
       }
     }
+
+    .refresh_icon_wrapper {
+      position: relative;
+      display: inline-block;
+      cursor: pointer;
+
+      .refresh_tooltip {
+        position: absolute;
+        line-height: 1;
+        top: -24px;
+        transition: all $transition-normal;
+        opacity: 0;
+        visibility: hidden;
+        pointer-events: none;
+        white-space: nowrap;
+        z-index: 10;
+        @include tooltip;
+      }
+
+      .refresh_icon {
+        transition: transform $transition-normal;
+        display: block;
+        border-radius: 100%;
+      }
+      &:active {
+        .refresh_icon {
+          filter: drop-shadow(0 1px 4px rgba(0, 0, 0, 0.2));
+        }
+      }
+      // ラッパーホバー時の動作
+      &:hover {
+        .refresh_tooltip {
+          opacity: 1;
+          visibility: visible;
+        }
+
+        .refresh_icon {
+          transform: scale(1.1);
+        }
+      }
+    }
   }
 
   .budget_add_button {

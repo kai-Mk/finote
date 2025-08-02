@@ -9,6 +9,7 @@ import { useTransitionByDate } from '../../hooks/useTransactionByDate';
 import LoadingSpinner from '@/components/ui/loading/LoadingSpinner';
 import TransactionInputContainer from '../transactionInputContainer/TransactionInputContainer';
 import { getIsDisplayButton } from '../../utils/getIsDisplayButton';
+import { useCalendarData } from '../../hooks/useCalendarData';
 
 type TransactionDetailContainerProps = {
   selectedDate: SelectedDate | null;
@@ -20,7 +21,11 @@ const TransactionDetailContainer = ({
   const transactionDetailDate =
     selectedDate && getTransactionDetailDate(selectedDate);
 
-  const { transactionDetailData, loading } = useTransitionByDate(selectedDate);
+  const {
+    transactionDetailData,
+    loading,
+    refetch: TransactionDetailRefetch,
+  } = useTransitionByDate(selectedDate);
 
   // 収支入力管理
   const [inputType, setInputType] = useState<'income' | 'expense' | null>(null);
@@ -44,6 +49,7 @@ const TransactionDetailContainer = ({
           inputType={inputType}
           setInputType={setInputType}
           selectedDate={selectedDate}
+          TransactionDetailRefetch={TransactionDetailRefetch}
         />
       ) : selectedDate ? (
         <div className={s.transaction_detail_main}>

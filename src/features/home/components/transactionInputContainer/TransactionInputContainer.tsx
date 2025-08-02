@@ -18,17 +18,20 @@ import InputTextArea from '@/components/ui/inputTextArea/InputTextArea';
 import PrimaryButton from '@/components/ui/primaryButton/PrimaryButton';
 import { useTransactionFormData } from '../../hooks/useTransactionFormData';
 import LoadingSpinner from '@/components/ui/loading/LoadingSpinner';
+import { trpc } from '@/lib/trpc';
 
 type TransactionInputContainerProps = {
   inputType: 'income' | 'expense' | null;
   setInputType: Dispatch<SetStateAction<'income' | 'expense' | null>>;
   selectedDate: SelectedDate;
+  TransactionDetailRefetch: () => void;
 };
 
 const TransactionInputContainer = ({
   inputType,
   setInputType,
   selectedDate,
+  TransactionDetailRefetch,
 }: TransactionInputContainerProps) => {
   const InputTypeLabel = inputType === 'income' ? '収入' : '支出';
   const inputTypeClass = inputType === 'income' ? s.income : s.expense;
@@ -49,16 +52,36 @@ const TransactionInputContainer = ({
     },
   });
 
+  const createTransactionMutation = trpc.transactions.create.useMutation({
+    onSuccess: (data) => {
+      methods.reset();
+      setInputType(null);
+      TransactionDetailRefetch();
+    },
+    onError: (error) => {
+      console.error('取引作成エラー:', error);
+      // エラーハンドリング
+      alert(`エラーが発生しました: ${error.message}`);
+    },
+  });
+
   // フォーム送信処理
   const onSubmit = async (data: TransactionFormInput) => {
     try {
-      console.log('送信データ:', data);
-      // TODO: ここでAPIを呼び出す
-      // await api.transactions.create(data);
+      // undefinedの値をnullまたは削除して整形
+      const submitData = {
+        amount: data.amount,
+        type: data.type,
+        mainCategoryId: data.mainCategoryId,
+        subCategoryId: data.subCategoryId || undefined, // undefinedのままでOK
+        description: data.description || undefined,
+        date: data.date,
+        budgetId: data.budgetId || undefined, // undefinedのままでOK
+        paymentMethodId: data.paymentMethodId,
+      };
 
-      // 送信成功時の処理
-      methods.reset();
-      setInputType(null);
+      // tRPC mutationを実行
+      await createTransactionMutation.mutateAsync(submitData);
     } catch (error) {
       console.error('送信エラー:', error);
     }

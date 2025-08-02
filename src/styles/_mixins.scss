@@ -92,3 +92,11 @@
   border-radius: 16px;
   padding: 24px;
 }
+
+@mixin tooltip {
+  font-size: $font-size-xs;
+  color: $white-text-color;
+  background: rgba($sub-color, 0.6);
+  border-radius: 5px;
+  padding: 4px;
+}
