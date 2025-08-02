@@ -17,7 +17,7 @@ const InputRadioButton = ({ radioButtonData, name }: InputRadioButtonProps) => {
   // 初期値として一番上の項目を設定
   useEffect(() => {
     if (radioButtonData && radioButtonData.length > 0 && !currentValue) {
-      setValue(name, radioButtonData[0].id);
+      setValue(name, String(radioButtonData[0].id));
     }
   }, [radioButtonData, name, setValue, currentValue]);
 
