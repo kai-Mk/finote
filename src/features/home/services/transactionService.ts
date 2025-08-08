@@ -145,3 +145,7 @@ export const getTransactionsByDate = async (
     throw new Error('取引データの取得に失敗しました');
   }
 };
+
+/**
+ *　特定のトランザクションデータの削除mutation
+ */

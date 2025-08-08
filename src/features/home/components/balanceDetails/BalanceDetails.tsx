@@ -5,9 +5,13 @@ import { TransactionDetailData } from '../../types/transaction';
 
 type BalanceDetailsProps = {
   transactionDetailData: TransactionDetailData | null;
+  handleDeleteTransaction: (transactionId: number) => void;
 };
 
-const BalanceDetails = ({ transactionDetailData }: BalanceDetailsProps) => {
+const BalanceDetails = ({
+  transactionDetailData,
+  handleDeleteTransaction,
+}: BalanceDetailsProps) => {
   const { income, expense } = transactionDetailData || {};
   return (
     <div className={s.balance_details}>
@@ -15,11 +19,17 @@ const BalanceDetails = ({ transactionDetailData }: BalanceDetailsProps) => {
       <div className={s.balance_details_grid}>
         <div className={s.balance_details_grid_item}>
           <p className={s.balance_details_label}>収入</p>
-          <BalanceDetailList transactionDetailMap={income?.transactions} />
+          <BalanceDetailList
+            transactionDetailMap={income?.transactions}
+            handleDeleteTransaction={handleDeleteTransaction}
+          />
         </div>
         <div className={s.balance_details_grid_item}>
           <p className={s.balance_details_label}>支出</p>
-          <BalanceDetailList transactionDetailMap={expense?.transactions} />
+          <BalanceDetailList
+            transactionDetailMap={expense?.transactions}
+            handleDeleteTransaction={handleDeleteTransaction}
+          />
         </div>
       </div>
     </div>

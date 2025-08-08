@@ -9,7 +9,7 @@ import { useTransitionByDate } from '../../hooks/useTransactionByDate';
 import LoadingSpinner from '@/components/ui/loading/LoadingSpinner';
 import TransactionInputContainer from '../transactionInputContainer/TransactionInputContainer';
 import { getIsDisplayButton } from '../../utils/getIsDisplayButton';
-import { useCalendarData } from '../../hooks/useCalendarData';
+import { trpc } from '@/lib/trpc';
 
 type TransactionDetailContainerProps = {
   selectedDate: SelectedDate | null;
@@ -24,7 +24,7 @@ const TransactionDetailContainer = ({
   const {
     transactionDetailData,
     loading,
-    refetch: TransactionDetailRefetch,
+    refetch: transactionDetailRefetch,
   } = useTransitionByDate(selectedDate);
 
   // 収支入力管理
@@ -38,6 +38,31 @@ const TransactionDetailContainer = ({
     }
   }, [selectedDate]);
 
+  const deleteTransaction = trpc.transactions.delete.useMutation({
+    onSuccess: (data) => {
+      console.log('削除成功:', data.message);
+      alert(data.message);
+      // 必要に応じて一覧を再取得
+      transactionDetailRefetch();
+    },
+    onError: (error) => {
+      console.error('削除エラー:', error);
+      alert(`削除に失敗しました: ${error.message}`);
+    },
+  });
+
+  // トランサクションデータの削除
+  const handleDeleteTransaction = async (transactionId: number) => {
+    const confirmed = window.confirm('この取引を削除してもよろしいですか？');
+    if (!confirmed) return;
+
+    try {
+      await deleteTransaction.mutateAsync({ id: transactionId });
+    } catch (error) {
+      // エラーはonErrorで処理される
+    }
+  };
+
   return (
     <div className={s.transaction_detail_container}>
       {loading ? (
@@ -49,7 +74,7 @@ const TransactionDetailContainer = ({
           inputType={inputType}
           setInputType={setInputType}
           selectedDate={selectedDate}
-          TransactionDetailRefetch={TransactionDetailRefetch}
+          transactionDetailRefetch={transactionDetailRefetch}
         />
       ) : selectedDate ? (
         <div className={s.transaction_detail_main}>
@@ -69,7 +94,10 @@ const TransactionDetailContainer = ({
             </div>
           )}
           <TotalBalance transactionDetailData={transactionDetailData} />
-          <BalanceDetails transactionDetailData={transactionDetailData} />
+          <BalanceDetails
+            transactionDetailData={transactionDetailData}
+            handleDeleteTransaction={handleDeleteTransaction}
+          />
         </div>
       ) : (
         <p className={s.not_selected_text}>日付を選択してください</p>

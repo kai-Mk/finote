@@ -24,14 +24,14 @@ type TransactionInputContainerProps = {
   inputType: 'income' | 'expense' | null;
   setInputType: Dispatch<SetStateAction<'income' | 'expense' | null>>;
   selectedDate: SelectedDate;
-  TransactionDetailRefetch: () => void;
+  transactionDetailRefetch: () => void;
 };
 
 const TransactionInputContainer = ({
   inputType,
   setInputType,
   selectedDate,
-  TransactionDetailRefetch,
+  transactionDetailRefetch,
 }: TransactionInputContainerProps) => {
   const InputTypeLabel = inputType === 'income' ? '収入' : '支出';
   const inputTypeClass = inputType === 'income' ? s.income : s.expense;
@@ -56,7 +56,7 @@ const TransactionInputContainer = ({
     onSuccess: (data) => {
       methods.reset();
       setInputType(null);
-      TransactionDetailRefetch();
+      transactionDetailRefetch();
     },
     onError: (error) => {
       console.error('取引作成エラー:', error);

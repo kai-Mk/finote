@@ -53,19 +53,19 @@ export interface MainCategory {
 /**
  * 子カテゴリー
  */
-export interface SubCategory {
+export type SubCategory = {
   id: number;
   name: string;
   mainCategoryId: number;
   createdAt: Date;
   updatedAt: Date;
   deletedAt: Date | null;
-}
+};
 
 /**
  * 支払い方法
  */
-export interface PaymentMethod {
+export type PaymentMethod = {
   id: number;
   name: string;
   type: PaymentMethodType;
@@ -73,12 +73,12 @@ export interface PaymentMethod {
   createdAt: Date;
   updatedAt: Date;
   deletedAt: Date | null;
-}
+};
 
 /**
  * 予算
  */
-export interface Budget {
+export type Budget = {
   id: number;
   name: string;
   totalAmount: number;
@@ -88,12 +88,12 @@ export interface Budget {
   createdAt: Date;
   updatedAt: Date;
   deletedAt: Date | null;
-}
+};
 
 /**
  * 取引データ（関連データ含む）
  */
-export interface Transaction {
+export type Transaction = {
   id: number;
   amount: number;
   type: TransactionType;
@@ -112,7 +112,7 @@ export interface Transaction {
   subCategory: SubCategory | null;
   paymentMethod: PaymentMethod;
   budget: Budget | null;
-}
+};
 
 /**
  * 指定した日の取引データ

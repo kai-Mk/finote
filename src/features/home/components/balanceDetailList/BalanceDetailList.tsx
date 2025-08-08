@@ -6,10 +6,12 @@ import { formatNumber } from '../../utils/formatValue';
 
 type BalanceDetailListProps = {
   transactionDetailMap: Transaction[] | undefined;
+  handleDeleteTransaction: (transactionId: number) => void;
 };
 
 const BalanceDetailList = ({
   transactionDetailMap,
+  handleDeleteTransaction,
 }: BalanceDetailListProps) => {
   return (
     <ul className={s.balance_detail_list}>
@@ -24,7 +26,11 @@ const BalanceDetailList = ({
             </div>
             <div className={s.action_buttons}>
               <Pencil size={16} className={s.action_button_icon} />
-              <Trash2 size={16} className={s.action_button_icon} />
+              <Trash2
+                size={16}
+                className={s.action_button_icon}
+                onClick={() => handleDeleteTransaction(transaction.id)}
+              />
             </div>
             <p
               className={`${s.amount} ${transaction.type === 'income' ? s.income : s.expense}`}
